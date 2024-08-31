@@ -19,7 +19,12 @@ class Test1:
         self.driver.get(self.urlBase)
         yield
         self.driver.quit()
-        
+    
+    @pytest.fixture
+    def login(self):
+        self.driver.find_element(By.CSS_SELECTOR, "[placeholder='Username']").send_keys(self.username)
+        self.driver.find_element(By.CSS_SELECTOR, "[placeholder='Password']").send_keys(self.password)
+        self.driver.find_element(By.XPATH, "//input[@type='submit']").click()
         
     def test_login_com_falha(self, setup):
         self.driver.find_element(By.XPATH, "//input[@type='submit']").click()
@@ -27,32 +32,17 @@ class Test1:
         assert self.driver.current_url == self.urlBase, 'URL Obtida: ' + self.driver.current_url + ' URL Esperada: ' + self.urlBase
         assert self.driver.find_element(By.XPATH, "//h3[text()='Epic sadface: Username is required']"), 'Mensagem de erro não exibida'
     
-    def test_login_com_sucesso(self, setup):        
-        self.driver.find_element(By.CSS_SELECTOR, "[placeholder='Username']").send_keys(self.username)
-        self.driver.find_element(By.CSS_SELECTOR, "[placeholder='Password']").send_keys(self.password)
-
-        self.driver.find_element(By.XPATH, "//input[@type='submit']").click()
-
+    def test_login_com_sucesso(self, setup, login):        
         assert self.driver.current_url == self.urlInventory, 'URL Obtida: ' + self.driver.current_url + ' URL Esperada: ' + self.urlInventory
         #assert self.driver.find_element(By.XPATH, "//h3[text()='Epic sadface: Username is required']"), 'Mensagem de erro não exibida'
     
-    def test_exibir_tela_produtos(self, setup):        
-        self.driver.find_element(By.CSS_SELECTOR, "[placeholder='Username']").send_keys(self.username)
-        self.driver.find_element(By.CSS_SELECTOR, "[placeholder='Password']").send_keys(self.password)
-
-        self.driver.find_element(By.XPATH, "//input[@type='submit']").click()
-        
+    def test_exibir_tela_produtos(self, setup, login):        
         assert self.driver.current_url == self.urlInventory, 'URL Obtida: ' + self.driver.current_url + ' URL Esperada: ' + self.urlInventory
         assert self.driver.find_element(By.CSS_SELECTOR, ".title").text == 'Products'
         assert len(self.driver.find_elements(By.CSS_SELECTOR, ".inventory_list")) > 0
         assert len(self.driver.find_elements(By.CSS_SELECTOR, ".inventory_item")) > 0
         
-    def test_realizar_logout(self, setup):
-        self.driver.find_element(By.CSS_SELECTOR, "[placeholder='Username']").send_keys(self.username)
-        self.driver.find_element(By.CSS_SELECTOR, "[placeholder='Password']").send_keys(self.password)
-
-        self.driver.find_element(By.XPATH, "//input[@type='submit']").click()
-        
+    def test_realizar_logout(self, setup, login):
         #assert login with success
         assert self.driver.find_element(By.CSS_SELECTOR, '.bm-burger-button').is_displayed()
         assert self.driver.find_element(By.CSS_SELECTOR, ".title").text == 'Products'
