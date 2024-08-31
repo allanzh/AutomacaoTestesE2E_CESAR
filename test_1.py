@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as Conditions
 from selenium.webdriver.common.by import By
 import pytest
 import time
@@ -51,7 +51,7 @@ class Test1:
         self.driver.find_element(By.CSS_SELECTOR, '.bm-burger-button').click()
         wait = WebDriverWait(self.driver, 10)
         element = wait.until(
-            EC.element_to_be_clickable(self.driver.find_element(By.CSS_SELECTOR, '#logout_sidebar_link'))
+            Conditions.element_to_be_clickable(((By.CSS_SELECTOR, '#logout_sidebar_link')))
             )
         element.click()
         
@@ -66,3 +66,8 @@ class Test1:
 #por atributo:
 # attr [attr]
 # attr=valor  [attr='valor']
+
+# passando elemento como uma tupla diretamente:
+# Conditions.element_to_be_clickable(((By.CSS_SELECTOR, '#logout_sidebar_link')))
+# a linha anterior substitui a necessidade do uso de self.driver.find_element :
+# Conditions.element_to_be_clickable( self.driver.find_element (By.CSS_SELECTOR, '#logout_sidebar_link'))
