@@ -19,11 +19,12 @@ class MenuHamburgerPage(BasePage):
     
     def click_logoff(self):
         self.open_menu()
-        wait = WebDriverWait(self.driver, 10)
-        element = wait.until(
-        # passando elemento como uma tupla diretamente:
-        # Conditions.element_to_be_clickable(((By.CSS_SELECTOR, '#logout_sidebar_link')))
-        # a linha anterior substitui a necessidade do uso de self.driver.find_element :
-        # Conditions.element_to_be_clickable( self.driver.find_element (By.CSS_SELECTOR, '#logout_sidebar_link'))
-            Conditions.element_to_be_clickable(((self.element_btn_logout))))
+        element = self.wait_element(self.element_btn_logout)
+        # wait = WebDriverWait(self.driver, 10)
+        # element = wait.until(
+        # # passando elemento como uma tupla diretamente:
+        # # Conditions.element_to_be_clickable(((By.CSS_SELECTOR, '#logout_sidebar_link')))
+        # # a linha anterior substitui a necessidade do uso de self.driver.find_element :
+        # # Conditions.element_to_be_clickable( self.driver.find_element (By.CSS_SELECTOR, '#logout_sidebar_link'))
+        #     Conditions.element_to_be_clickable(((self.element_btn_logout))))
         element.click()
