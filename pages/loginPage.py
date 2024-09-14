@@ -1,7 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from pages.basePage import BasePage
 
-class LoginPage:
+class LoginPage(BasePage):
     #Variables
     url = "https://www.saucedemo.com/"
     username = "standard_user"
@@ -12,8 +13,7 @@ class LoginPage:
     msg_error = (By.XPATH, "//h3[text()='Epic sadface: Username is required']")
     
     def __init__(self) -> None:
-        self.driver = webdriver.Chrome()
-        self.driver.maximize_window()
+        super(LoginPage, self).__init__(None)
         
     
     def open_login(self):
@@ -31,10 +31,8 @@ class LoginPage:
         self.driver.find_element(*self.btn_submit).click()
 
     def verify_url_login(self):
-        return self.driver.current_url == self.url
+        return self.verify_url(self.url)
     
     def verify_error_message(self):
         return self.driver.find_element(*self.msg_error)
     
-    def close(self):
-        self.driver.close()

@@ -1,7 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from pages.basePage import BasePage
 
-class ProductsPage:
+class ProductsPage(BasePage):
     url = 'https://www.saucedemo.com/inventory.html'
     products_title = 'Products'
     

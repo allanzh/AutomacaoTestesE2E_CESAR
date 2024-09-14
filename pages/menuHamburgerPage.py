@@ -2,8 +2,9 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as Conditions
+from pages.basePage import BasePage
 
-class MenuHamburgerPage:
+class MenuHamburgerPage(BasePage):
     element_menu = (By.CSS_SELECTOR, '.bm-burger-button')
     element_btn_logout = (By.CSS_SELECTOR, '#logout_sidebar_link')
     
