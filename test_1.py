@@ -36,10 +36,10 @@ class Test1:
         loginPage.click_login_button()
 
         #assert driver.current_url == urlBase, 'URL Obtida: ' + driver.current_url + ' URL Esperada: ' + urlBase
-        assert loginPage.verify_url_login()
+        assert loginPage.verify_url_login(), 'URL obtida foi diferente da esperada'
         
         #assert driver.find_element(By.XPATH, "//h3[text()='Epic sadface: Username is required']"), 'Mensagem de erro não exibida'
-        assert loginPage.verify_error_message()
+        assert loginPage.verify_error_message() , 'Mensagem de erro não exibida'
         
         # driver.save_screenshot("Login_Failed_Actual.png")
         # screenAtual = Image.open("Login_Failed_Actual.png")
