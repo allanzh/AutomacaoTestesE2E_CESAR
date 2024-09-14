@@ -2,9 +2,14 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 class LoginPage:
+    #Variables
     url = "https://www.saucedemo.com/"
+    username = "standard_user"
+    password = "secret_sauce"
+    
+    #Locators
     btn_submit = (By.XPATH, '//input[@type="submit"]')
-    msg_error = By.XPATH, "//h3[text()='Epic sadface: Username is required']"
+    msg_error = (By.XPATH, "//h3[text()='Epic sadface: Username is required']")
     
     def __init__(self) -> None:
         self.driver = webdriver.Chrome()
@@ -15,14 +20,21 @@ class LoginPage:
         #self.driver = webdriver.Chrome()
         #self.driver.maximize_window()
         self.driver.get(self.url)
+    
+    def fill_login_fields(self, username=username, password=password):
+        self.driver.find_element(By.CSS_SELECTOR, "[placeholder='Username']").send_keys(username)
+        self.driver.find_element(By.CSS_SELECTOR, "[placeholder='Password']").send_keys(password)
+        self.click_login_button()
         
     def click_login_button(self):
         #self.driver.find_element(By.XPATH, "//input[@type='submit']").click()
         self.driver.find_element(*self.btn_submit).click()
 
     def verify_url_login(self):
-        return self.driver.current_url == self.url#, 'URL Obtida: ' + self.driver.current_url + ' URL Esperada: ' + self.url
+        return self.driver.current_url == self.url
     
     def verify_error_message(self):
-        return self.driver.find_element(*self.msg_error)#, 'Mensagem de erro não exibida'
+        return self.driver.find_element(*self.msg_error)
     
+    def close(self):
+        self.driver.close()
