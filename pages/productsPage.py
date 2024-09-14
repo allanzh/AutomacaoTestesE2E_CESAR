@@ -13,6 +13,10 @@ class ProductsPage:
     def __init__(self, driver) -> None:
         self.driver = driver
         
+    def verify_is_logged(self):
+        assert self.verify_url_products_page()
+        assert self.verify_page_title()
+        
     def verify_url_products_page(self):
         return self.driver.current_url == self.url
     
